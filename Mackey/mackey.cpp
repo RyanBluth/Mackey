@@ -16,7 +16,7 @@ struct KeyAction {
 
 
 void readFile(const char* filename, KeyAction** actions, int* numActions) {
-	FILE * f = fopen(filename, "r");
+	FILE * f = fopen(filename, "r+");
 	fseek(f, 0, SEEK_END);
 	long fsize = ftell(f);
 	rewind(f);
@@ -24,7 +24,7 @@ void readFile(const char* filename, KeyAction** actions, int* numActions) {
 	char* fc = (char*)malloc(fsize + 1);
 	fread(fc, fsize, 1, f);
 	fclose(f);
-
+	
 	fc[fsize] = 0;
 
 	int numLines = 0;
@@ -127,7 +127,7 @@ int main(int argc, const char* argv[]){
 	int * numActions = (int*)malloc(sizeof(int));
 	KeyAction ** actions = (KeyAction**)malloc(sizeof(KeyAction*));
 
-	readFile(0, actions, numActions);
+	readFile(argv[1], actions, numActions);
 
 	while (true) {
 		for (int i = 0; i < *numActions; i++) {
